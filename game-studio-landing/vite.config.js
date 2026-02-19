@@ -3,6 +3,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: '.',
+  base: './', // Относительные пути для GitHub Pages
   publicDir: 'public',
   build: {
     outDir: 'dist',

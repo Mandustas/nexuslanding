@@ -136,6 +136,46 @@ $transition-slow: 500ms ease;
 - PWA manifest для установки на устройства
 - Оптимизированные шрифты с preload
 
+## 🚀 Деплой на GitHub Pages
+
+### Автоматический деплой (GitHub Actions)
+
+1. **Создайте репозиторий на GitHub:**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin https://github.com/USERNAME/REPO_NAME.git
+   git push -u origin main
+   ```
+
+2. **GitHub Actions автоматически задеплоит сайт** после пуша в ветку `main`
+
+3. **Включите GitHub Pages:**
+   - Перейдите в Settings → Pages
+   - В разделе "Build and deployment":
+     - Source: GitHub Actions
+   - После первого деплоя сайт будет доступен по адресу:
+     `https://USERNAME.github.io/REPO_NAME/`
+
+### Ручной деплой
+
+```bash
+# Сборка
+npm run build
+
+# Деплой через gh-pages (требуется пакет)
+npm install -D gh-pages
+npx gh-pages -d dist
+```
+
+### Локальная проверка перед деплоем
+
+```bash
+npm run preview
+```
+
 ## 📊 Производительность
 
 Целевые показатели Lighthouse:
