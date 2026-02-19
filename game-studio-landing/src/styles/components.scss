@@ -1,0 +1,748 @@
+// ==========================================
+// BUTTONS
+// ==========================================
+
+// Import variables and mixins at the top
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+  padding: $spacing-4 $spacing-8;
+  font-family: $font-heading;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: $radius-base;
+  cursor: pointer;
+  transition: all $transition-base;
+  position: relative;
+  overflow: hidden;
+  
+  .btn-icon {
+    transition: transform $transition-fast;
+  }
+  
+  &:hover {
+    .btn-icon {
+      transform: translateX(5px);
+    }
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Primary Button
+.btn-primary {
+  background: $gradient-primary;
+  color: $color-black;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba($color-white, 0.3),
+      transparent
+    );
+    transition: left $transition-slow;
+  }
+  
+  &:hover {
+    &::before {
+      left: 100%;
+    }
+  }
+}
+
+// Secondary Button
+.btn-secondary {
+  background: transparent;
+  color: $color-white;
+  border: 2px solid $color-gray;
+  
+  &:hover {
+    border-color: $color-neon-blue;
+    color: $color-neon-blue;
+  }
+}
+
+// Outline Button
+.btn-outline {
+  background: transparent;
+  color: $color-neon-blue;
+  border: 1px solid $color-neon-blue;
+  
+  &:hover {
+    background: rgba($color-neon-blue, 0.1);
+    @include neon-glow($color-neon-blue, 'low');
+  }
+}
+
+// Glow Button
+.btn-glow {
+  @include neon-glow($color-neon-blue, 'medium');
+  
+  &:hover {
+    @include neon-glow($color-neon-blue, 'high');
+  }
+}
+
+// Button Sizes
+.btn-sm {
+  padding: $spacing-2 $spacing-4;
+  font-size: $font-size-xs;
+}
+
+.btn-lg {
+  padding: $spacing-5 $spacing-10;
+  font-size: $font-size-base;
+}
+
+// ==========================================
+// HERO SECTION
+// ==========================================
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 80px;
+}
+
+.hero-bg-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  @include grid-background(60px, rgba($color-neon-blue, 0.05));
+  transform: perspective(500px) rotateX(60deg);
+  transform-origin: center top;
+  animation: grid-move 20s linear infinite;
+  pointer-events: none;
+}
+
+.hero-container {
+  @include flex-between;
+  gap: $spacing-12;
+  position: relative;
+  z-index: 2;
+  
+  @include mobile {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 650px;
+}
+
+.hero-title {
+  margin-bottom: $spacing-6;
+  line-height: 1.1;
+  
+  .hero-title-line {
+    display: block;
+    @include gradient-text;
+    @include text-glow($color-neon-blue);
+  }
+}
+
+.hero-subtitle {
+  font-size: $font-size-xl;
+  color: $color-gray;
+  margin-bottom: $spacing-8;
+  line-height: 1.8;
+  
+  .highlight {
+    color: $color-neon-blue;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.hero-cta {
+  display: flex;
+  gap: $spacing-4;
+  
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.hero-visual {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-3d-container {
+  width: 100%;
+  max-width: 500px;
+  height: 500px;
+  position: relative;
+  
+  @include mobile {
+    height: 300px;
+    max-width: 300px;
+  }
+}
+
+@keyframes grid-move {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+// ==========================================
+// ABOUT SECTION
+// ==========================================
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-16;
+  align-items: center;
+  
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.about-text {
+  .about-description {
+    font-size: $font-size-lg;
+    color: $color-gray;
+    line-height: 1.8;
+    margin-bottom: $spacing-6;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-6;
+  
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-4;
+  }
+}
+
+.stat-card {
+  @include glass-card;
+  padding: $spacing-8;
+  text-align: center;
+  transition: all $transition-base;
+  
+  &:hover {
+    transform: translateY(-5px);
+    @include neon-glow($color-purple, 'low');
+  }
+}
+
+.stat-number {
+  font-family: $font-heading;
+  font-size: $font-size-5xl;
+  font-weight: $font-weight-black;
+  color: $color-neon-blue;
+  @include text-glow($color-neon-blue);
+  margin-bottom: $spacing-2;
+  
+  @include mobile {
+    font-size: $font-size-4xl;
+  }
+}
+
+.stat-label {
+  font-size: $font-size-sm;
+  color: $color-gray;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+// ==========================================
+// PORTFOLIO SECTION
+// ==========================================
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: $spacing-8;
+  
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.project-card {
+  @include glass-card;
+  overflow: hidden;
+  transition: all $transition-base;
+  
+  &:hover {
+    transform: translateY(-10px);
+    
+    .project-overlay {
+      opacity: 1;
+    }
+    
+    .project-placeholder {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.project-image {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.project-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform $transition-slow;
+}
+
+.project-icon {
+  font-size: $font-size-6xl;
+  filter: drop-shadow(0 0 20px rgba($color-white, 0.5));
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($color-black, 0.8);
+  @include glassmorphism(10px, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: $spacing-6;
+  opacity: 0;
+  transition: opacity $transition-base;
+}
+
+.project-info {
+  .project-name {
+    font-size: $font-size-xl;
+    color: $color-white;
+    margin-bottom: $spacing-1;
+  }
+  
+  .project-genre {
+    font-size: $font-size-sm;
+    color: $color-neon-blue;
+  }
+}
+
+.project-tags {
+  display: flex;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+}
+
+.project-content {
+  padding: $spacing-6;
+  
+  .project-description {
+    font-size: $font-size-base;
+    color: $color-gray;
+    margin-bottom: $spacing-4;
+    line-height: 1.6;
+  }
+}
+
+.project-link {
+  font-family: $font-heading;
+  font-size: $font-size-sm;
+  color: $color-neon-blue;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-2;
+  
+  .link-arrow {
+    transition: transform $transition-fast;
+  }
+  
+  &:hover {
+    .link-arrow {
+      transform: translateX(5px);
+    }
+  }
+}
+
+// ==========================================
+// TECHNOLOGIES SECTION
+// ==========================================
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: $spacing-6;
+  
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.tech-item {
+  @include glass-card;
+  padding: $spacing-8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: $spacing-4;
+  transition: all $transition-base;
+  
+  &:hover {
+    transform: translateY(-5px) scale(1.05);
+    @include neon-glow($color-neon-blue, 'low');
+  }
+}
+
+.tech-icon {
+  width: 60px;
+  height: 60px;
+  color: $color-neon-blue;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.tech-name {
+  font-family: $font-heading;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+// ==========================================
+// CAREERS SECTION
+// ==========================================
+
+.vacancies-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: $spacing-8;
+  
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vacancy-card {
+  @include glass-card;
+  padding: $spacing-8;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  transition: all $transition-base;
+  
+  &:hover {
+    transform: translateY(-5px);
+    @include neon-glow($color-purple, 'low');
+  }
+}
+
+.vacancy-header {
+  @include flex-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: $spacing-2;
+}
+
+.vacancy-title {
+  font-size: $font-size-xl;
+  color: $color-white;
+  margin: 0;
+}
+
+.vacancy-type {
+  font-size: $font-size-xs;
+  color: $color-neon-blue;
+  background: rgba($color-neon-blue, 0.1);
+  padding: $spacing-1 $spacing-3;
+  border-radius: $radius-full;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.vacancy-description {
+  font-size: $font-size-base;
+  color: $color-gray;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.vacancy-tags {
+  display: flex;
+  gap: $spacing-2;
+  flex-wrap: wrap;
+}
+
+// ==========================================
+// CONTACTS SECTION
+// ==========================================
+
+.contacts-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-16;
+  
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contacts-info {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-8;
+}
+
+.contact-item {
+  display: flex;
+  gap: $spacing-4;
+  align-items: flex-start;
+}
+
+.contact-icon {
+  font-size: $font-size-3xl;
+  flex-shrink: 0;
+}
+
+.contact-details {
+  h4 {
+    font-size: $font-size-lg;
+    color: $color-white;
+    margin-bottom: $spacing-1;
+  }
+  
+  p {
+    color: $color-gray;
+    margin: 0;
+    line-height: 1.6;
+  }
+}
+
+.social-links {
+  display: flex;
+  gap: $spacing-4;
+  margin-top: $spacing-4;
+}
+
+.social-link {
+  width: 50px;
+  height: 50px;
+  @include glass-card;
+  @include flex-center;
+  color: $color-gray;
+  transition: all $transition-base;
+  
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  &:hover {
+    color: $color-neon-blue;
+    @include neon-glow($color-neon-blue, 'low');
+    transform: translateY(-3px);
+  }
+}
+
+// ==========================================
+// CONTACT FORM
+// ==========================================
+
+.contact-form {
+  @include glass-card;
+  padding: $spacing-8;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-6;
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-input {
+  width: 100%;
+  padding: $spacing-4 $spacing-4;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  color: $color-white;
+  background: rgba($color-black-dark, 0.5);
+  border: 1px solid rgba($color-gray-dark, 0.5);
+  border-radius: $radius-base;
+  transition: all $transition-base;
+  outline: none;
+  
+  &:focus {
+    border-color: $color-neon-blue;
+    @include neon-glow($color-neon-blue, 'low');
+  }
+  
+  &::placeholder {
+    color: transparent;
+  }
+  
+  // Select specific
+  &[type="select"] {
+    cursor: pointer;
+    
+    option {
+      background: $color-black;
+      color: $color-white;
+    }
+  }
+  
+  // Textarea specific
+  &[rows] {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+.form-label {
+  position: absolute;
+  top: 50%;
+  left: $spacing-4;
+  transform: translateY(-50%);
+  font-size: $font-size-base;
+  color: $color-gray;
+  pointer-events: none;
+  transition: all $transition-fast;
+  background: transparent;
+  padding: 0 $spacing-1;
+  
+  .form-input:focus ~ &,
+  .form-input:not(:placeholder-shown) ~ & {
+    top: 0;
+    font-size: $font-size-xs;
+    color: $color-neon-blue;
+    background: $color-black;
+  }
+  
+  // Adjust for textarea
+  textarea ~ & {
+    top: $spacing-4;
+    transform: none;
+    
+    textarea:focus ~ &,
+    textarea:not(:placeholder-shown) ~ & {
+      top: 0;
+    }
+  }
+}
+
+.form-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: $gradient-primary;
+  transition: width $transition-base;
+  
+  .form-input:focus ~ & {
+    width: 100%;
+  }
+}
+
+.btn-submit {
+  margin-top: $spacing-4;
+}
+
+// ==========================================
+// TAG COMPONENT
+// ==========================================
+
+.tag {
+  font-size: $font-size-xs;
+  color: $color-gray-light;
+  background: rgba($color-gray-dark, 0.3);
+  padding: $spacing-1 $spacing-3;
+  border-radius: $radius-full;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all $transition-fast;
+  
+  &:hover {
+    background: rgba($color-neon-blue, 0.2);
+    color: $color-neon-blue;
+  }
+}
+
+// ==========================================
+// HOLOGRAPHIC CARD BASE
+// ==========================================
+
+.holographic-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform $transition-base;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba($color-neon-blue, 0.1) 0%,
+      rgba($color-purple, 0.1) 50%,
+      rgba($color-neon-blue, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity $transition-base;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  
+  &:hover::before {
+    opacity: 1;
+  }
+}

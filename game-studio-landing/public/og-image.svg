@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A0A0F"/>
+      <stop offset="100%" style="stop-color:#0D0D14"/>
+    </linearGradient>
+    <linearGradient id="text-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00F0FF"/>
+      <stop offset="100%" style="stop-color:#7B2CBF"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-gradient)"/>
+  
+  <!-- Grid pattern -->
+  <defs>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+      <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(0, 240, 255, 0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  
+  <!-- Logo -->
+  <g transform="translate(100, 215)">
+    <polygon points="150,0 270,60 270,180 150,240 30,180 30,60" fill="none" stroke="url(#text-gradient)" stroke-width="4"/>
+    <polygon points="150,30 240,75 240,165 150,210 60,165 60,75" fill="url(#text-gradient)" opacity="0.2"/>
+    <circle cx="150" cy="120" r="50" fill="url(#text-gradient)"/>
+    <polygon points="150,90 180,120 150,150 120,120" fill="#0A0A0F"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="450" y="200" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="url(#text-gradient)">
+    NEXUS STUDIOS
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="450" y="280" font-family="Arial, sans-serif" font-size="32" fill="#8892B0" letter-spacing="4">
+    GAME DEVELOPMENT
+  </text>
+  
+  <!-- Decorative elements -->
+  <circle cx="1050" cy="480" r="100" fill="none" stroke="rgba(0, 240, 255, 0.1)" stroke-width="2"/>
+  <circle cx="1050" cy="480" r="70" fill="none" stroke="rgba(123, 44, 191, 0.1)" stroke-width="2"/>
+  <circle cx="1050" cy="480" r="40" fill="rgba(0, 240, 255, 0.05)"/>
+  
+  <!-- Bottom line -->
+  <rect x="100" y="550" width="1000" height="2" fill="url(#text-gradient)" opacity="0.3"/>
+  
+  <!-- Tagline -->
+  <text x="600" y="590" font-family="Arial, sans-serif" font-size="18" fill="#8892B0" text-anchor="middle">
+    Создаём миры, в которые хочется вернуться
+  </text>
+</svg>

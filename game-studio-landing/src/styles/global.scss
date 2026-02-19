@@ -1,0 +1,580 @@
+// ==========================================
+// GLOBAL STYLES
+// ==========================================
+
+// Import variables and mixins at the top
+@use 'variables' as *;
+@use 'mixins' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: 1.6;
+  color: $color-gray-light;
+  background-color: $color-black;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+// Selection color
+::selection {
+  background-color: $color-neon-blue;
+  color: $color-black;
+}
+
+::-moz-selection {
+  background-color: $color-neon-blue;
+  color: $color-black;
+}
+
+// ==========================================
+// TYPOGRAPHY
+// ==========================================
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-heading;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  color: $color-white;
+}
+
+h1 {
+  @include responsive-font($font-size-4xl, $font-size-7xl);
+}
+
+h2 {
+  @include responsive-font($font-size-3xl, $font-size-5xl);
+}
+
+h3 {
+  @include responsive-font($font-size-2xl, $font-size-3xl);
+}
+
+h4 {
+  @include responsive-font($font-size-xl, $font-size-2xl);
+}
+
+p {
+  margin-bottom: $spacing-4;
+}
+
+a {
+  color: $color-neon-blue;
+  text-decoration: none;
+  transition: color $transition-fast;
+  
+  &:hover {
+    color: $color-purple-light;
+  }
+}
+
+// ==========================================
+// CONTAINER
+// ==========================================
+
+.container {
+  @include container;
+  max-width: $container-max-width;
+  margin: 0 auto;
+}
+
+// ==========================================
+// SECTION STYLES
+// ==========================================
+
+.section {
+  padding: $spacing-20 0;
+  position: relative;
+  
+  @include md {
+    padding: $spacing-24 0;
+  }
+  
+  @include lg {
+    padding: $spacing-24 0;
+  }
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: $spacing-16;
+}
+
+.section-title {
+  margin-bottom: $spacing-4;
+  @include text-glow($color-neon-blue);
+  
+  // Glitch effect on hover
+  &:hover {
+    @include glitch-effect;
+  }
+}
+
+.section-subtitle {
+  font-size: $font-size-lg;
+  color: $color-gray;
+  font-weight: $font-weight-light;
+}
+
+// ==========================================
+// PARTICLES CANVAS
+// ==========================================
+
+.particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $z-base;
+  pointer-events: none;
+}
+
+// ==========================================
+// LOADER
+// ==========================================
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $color-black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-modal;
+  transition: opacity $transition-slower, visibility $transition-slower;
+  
+  &.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.loader-terminal {
+  text-align: center;
+  padding: $spacing-8;
+}
+
+.loader-line {
+  width: 200px;
+  height: 2px;
+  background: $gradient-primary;
+  margin: 0 auto $spacing-6;
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: $gradient-primary;
+    animation: loader-line 1.5s ease-in-out infinite;
+  }
+}
+
+.loader-text {
+  font-family: $font-heading;
+  font-size: $font-size-xl;
+  color: $color-neon-blue;
+  margin-bottom: $spacing-6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-2;
+}
+
+.loader-prompt {
+  color: $color-purple-light;
+}
+
+.loader-command {
+  letter-spacing: 2px;
+  animation: pulse 0.5s ease-in-out infinite;
+}
+
+.loader-cursor {
+  animation: blink 1s step-end infinite;
+}
+
+.loader-progress {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.loader-bar {
+  width: 100%;
+  height: 4px;
+  background: $color-black-dark;
+  border-radius: $radius-full;
+  overflow: hidden;
+  margin-bottom: $spacing-4;
+}
+
+.loader-fill {
+  width: 0%;
+  height: 100%;
+  background: $gradient-primary;
+  transition: width $transition-fast;
+  @include neon-glow($color-neon-blue, 'low');
+}
+
+.loader-percent {
+  font-family: $font-heading;
+  font-size: $font-size-sm;
+  color: $color-gray;
+}
+
+// ==========================================
+// MAIN CONTENT
+// ==========================================
+
+.main-content {
+  position: relative;
+  z-index: $z-base;
+  opacity: 0;
+  transition: opacity $transition-slower;
+  
+  &.visible {
+    opacity: 1;
+  }
+}
+
+// ==========================================
+// NAVBAR
+// ==========================================
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: $z-fixed;
+  padding: $spacing-4 0;
+  transition: all $transition-base;
+  
+  &.scrolled {
+    @include glassmorphism(20px, 0.05);
+    padding: $spacing-3 0;
+    border-bottom: 1px solid rgba($color-neon-blue, 0.1);
+  }
+}
+
+.navbar-container {
+  @include flex-between;
+}
+
+.navbar-logo {
+  font-family: $font-heading;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  @include text-glow($color-neon-blue);
+  
+  &:hover {
+    @include glitch-effect;
+  }
+}
+
+.logo-icon {
+  color: $color-neon-blue;
+  font-size: $font-size-2xl;
+}
+
+.navbar-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $spacing-2;
+  
+  span {
+    width: 25px;
+    height: 2px;
+    background: $color-white;
+    transition: all $transition-fast;
+  }
+  
+  @include mobile {
+    display: flex;
+  }
+}
+
+.navbar-menu {
+  display: flex;
+  list-style: none;
+  gap: $spacing-8;
+  
+  @include mobile {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    height: 0;
+    flex-direction: column;
+    background: $color-black;
+    gap: 0;
+    overflow: hidden;
+    transition: height $transition-base;
+    border-bottom: 1px solid rgba($color-neon-blue, 0.1);
+    
+    &.active {
+      height: auto;
+      padding: $spacing-4 0;
+    }
+  }
+}
+
+.navbar-link {
+  font-family: $font-heading;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-gray-light;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all $transition-fast;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: $gradient-primary;
+    transition: width $transition-base;
+  }
+  
+  &:hover {
+    color: $color-neon-blue;
+    
+    &::after {
+      width: 100%;
+    }
+  }
+  
+  @include mobile {
+    padding: $spacing-4 $spacing-6;
+    display: block;
+    
+    &::after {
+      display: none;
+    }
+  }
+}
+
+// ==========================================
+// SCROLL INDICATOR
+// ==========================================
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: $spacing-8;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-2;
+  color: $color-gray;
+  font-size: $font-size-xs;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.scroll-mouse {
+  width: 20px;
+  height: 35px;
+  border: 2px solid $color-gray;
+  border-radius: $radius-full;
+  position: relative;
+}
+
+.scroll-wheel {
+  width: 4px;
+  height: 8px;
+  background: $color-neon-blue;
+  border-radius: $radius-full;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scroll-wheel 2s ease-in-out infinite;
+}
+
+// ==========================================
+// FOOTER
+// ==========================================
+
+.footer {
+  padding: $spacing-8 0;
+  border-top: 1px solid rgba($color-neon-blue, 0.1);
+  background: $color-black-dark;
+}
+
+.footer-content {
+  @include flex-between;
+  
+  @include mobile {
+    flex-direction: column;
+    gap: $spacing-4;
+    text-align: center;
+  }
+}
+
+.footer-logo {
+  font-family: $font-heading;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-bold;
+  color: $color-white;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  @include text-glow($color-neon-blue);
+}
+
+.footer-text {
+  color: $color-gray;
+  font-size: $font-size-sm;
+}
+
+// ==========================================
+// ANIMATIONS
+// ==========================================
+
+@keyframes loader-line {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(10px);
+  }
+}
+
+@keyframes scroll-wheel {
+  0%, 100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(-50%) translateY(10px);
+  }
+}
+
+@keyframes holographic-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes glitch-1 {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-2 {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(2px, -2px);
+  }
+  40% {
+    transform: translate(2px, 2px);
+  }
+  60% {
+    transform: translate(-2px, -2px);
+  }
+  80% {
+    transform: translate(-2px, 2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+// ==========================================
+// CUSTOM SCROLLBAR
+// ==========================================
+
+html {
+  @include custom-scrollbar($color-purple, $color-black-dark);
+}

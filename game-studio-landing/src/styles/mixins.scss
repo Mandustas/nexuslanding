@@ -1,0 +1,221 @@
+// ==========================================
+// MIXINS
+// ==========================================
+
+// Import variables first
+@use 'variables' as *;
+
+// ==========================================
+// GLASSMORPHISM
+// ==========================================
+@mixin glassmorphism($blur: 10px, $opacity: 0.1) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@mixin glass-card {
+  @include glassmorphism(20px, 0.05);
+  border-radius: $radius-xl;
+  box-shadow: $shadow-lg;
+}
+
+// ==========================================
+// NEON GLOW
+// ==========================================
+@mixin neon-glow($color: $color-neon-blue, $intensity: 'medium') {
+  @if $intensity == 'low' {
+    box-shadow: 0 0 5px $color,
+                0 0 10px $color,
+                0 0 15px rgba($color, 0.5);
+  } @else if $intensity == 'medium' {
+    box-shadow: 0 0 10px $color,
+                0 0 20px $color,
+                0 0 30px rgba($color, 0.5),
+                0 0 40px rgba($color, 0.3);
+  } @else if $intensity == 'high' {
+    box-shadow: 0 0 20px $color,
+                0 0 40px $color,
+                0 0 60px rgba($color, 0.5),
+                0 0 80px rgba($color, 0.3);
+  }
+}
+
+@mixin text-glow($color: $color-neon-blue) {
+  text-shadow: 0 0 10px $color,
+               0 0 20px $color,
+               0 0 30px rgba($color, 0.5);
+}
+
+// ==========================================
+// GRADIENT TEXT
+// ==========================================
+@mixin gradient-text {
+  background: $gradient-primary;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// ==========================================
+// HOLOGRAPHIC EFFECT
+// ==========================================
+@mixin holographic {
+  background: linear-gradient(
+    135deg,
+    rgba($color-neon-blue, 0.1) 0%,
+    rgba($color-purple, 0.1) 25%,
+    rgba($color-neon-blue, 0.1) 50%,
+    rgba($color-purple, 0.1) 75%,
+    rgba($color-neon-blue, 0.1) 100%
+  );
+  background-size: 400% 400%;
+  animation: holographic-shift 10s ease infinite;
+}
+
+// ==========================================
+// GRID BACKGROUND
+// ==========================================
+@mixin grid-background($size: 50px, $color: rgba($color-neon-blue, 0.1)) {
+  background-image: 
+    linear-gradient($color 1px, transparent 1px),
+    linear-gradient(90deg, $color 1px, transparent 1px);
+  background-size: $size $size;
+}
+
+// ==========================================
+// HEXAGON PATTERN
+// ==========================================
+@mixin hexagon-pattern($size: 100px, $color: rgba($color-purple, 0.05)) {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%237B2CBF' fill-opacity='0.05'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: $size $size;
+}
+
+// ==========================================
+// GLITCH EFFECT
+// ==========================================
+@mixin glitch-effect {
+  position: relative;
+  
+  &::before,
+  &::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  &::before {
+    animation: glitch-1 0.3s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+    color: $color-neon-blue;
+    z-index: -1;
+  }
+  
+  &::after {
+    animation: glitch-2 0.3s infinite linear alternate-reverse;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    color: $color-purple;
+    z-index: -2;
+  }
+}
+
+// ==========================================
+// RESPONSIVE TYPOGRAPHY
+// ==========================================
+@mixin responsive-font($min-size, $max-size) {
+  font-size: clamp($min-size, 5vw, $max-size);
+}
+
+// ==========================================
+// CONTAINER MIXIN
+// ==========================================
+@mixin container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+}
+
+// ==========================================
+// FLEX CENTER
+// ==========================================
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// ==========================================
+// ABSOLUTE CENTER
+// ==========================================
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// ==========================================
+// TRUNCATE TEXT
+// ==========================================
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+// ==========================================
+// ACCESSIBILITY
+// ==========================================
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ==========================================
+// SCROLLBAR
+// ==========================================
+@mixin custom-scrollbar($thumb-color: $color-purple, $track-color: $color-black-dark) {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $radius-full;
+    
+    &:hover {
+      background: $color-purple-light;
+    }
+  }
+}
